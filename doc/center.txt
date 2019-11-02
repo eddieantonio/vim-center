@@ -1,0 +1,54 @@
+*center.txt* create centered comments for headings
+
+                            ___           _             ~
+                           / __\___ _ __ | |_ ___ _ __  ~
+                          / /  / _ \ '_ \| __/ _ \ '__| ~
+                         / /__|  __/ | | | ||  __/ |    ~
+                         \____/\___|_| |_|\__\___|_|    ~
+
+                      Create centered heading commments
+
+================================================================================
+CONTENTS                                                        *CenterContents*
+
+ 1. Usage .............. |CenterUsage|
+ 2. Bugs ............... |CenterBugs|
+ 3. Changelog .......... |CenterChangelog|
+ 4. Credits ............ |CenterCredits|
+
+
+================================================================================
+Section 1: Usage                                                   *CenterUsage*
+
+The main usage is from command mode.
+
+Type the text of the comment you want to make a, then use the |CenterHeading|
+command: >
+    :CenterHeading
+<
+
+That's it!
+
+--------------------------------------------------------------------------------
+CenterHeading                                                    *CenterHeading*
+
+Centers the currently line, surronding each side with single-line comment
+delimeters.
+
+
+================================================================================
+Section 2: Bugs                                                     *CenterBugs*
+
+Currently, this overrides the default yank register.
+
+================================================================================
+Section 3: Changelog                                           *CenterChangelog*
+
+0.1.0
+ - initial release
+ - Eddie's first plugin -- I have no idea what I'm doing
+
+================================================================================
+Section 4: Credits                                               *CenterCredits*
+
+Created in 2019 by Eddie Antonio Santos.
