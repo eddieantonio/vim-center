@@ -7,21 +7,19 @@
 " ============================================================================
 
 " Script intialization section
-if exists("loaded_c_center")
+if exists('loaded_c_center')
   finish
 endif
 
-"""""""""""""""""""""""""" let loaded_c_center = 1 """""""""""""""""""""""""""
-
-" P.S., for n00bs like me: https://devhints.io/vimscript
+let loaded_c_center = 1
 
 function! s:CenterComment()
-  let l:current_line = line(".")
-  let l:heading_text = trim(getline("."))
+  let l:current_line = line('.')
+  let l:heading_text = trim(getline('.'))
 
   let l:comment_parts = s:DetermineCommentDelimiters(&commentstring)
   if len(l:comment_parts) != 3
-    echoerr "Cannot determine comment delimiters"
+    echoerr 'Cannot determine comment delimiters'
     return
   end
   let l:begin = l:comment_parts[0]
@@ -49,12 +47,11 @@ function! s:CenterComment()
   let l:space_available = l:space_available - len(l:end)
 
   if l:space_available <=# 0
-    echoerr "Not enough space!"
+    echoerr 'Not enough space!'
     return
   endif
 
   let l:left_space = l:space_available / 2
-  "
   " Uneven space left? have an extra padding on the right.
   if l:space_available / 2.0 ># l:left_space
     let l:right_space = l:left_space + 1
