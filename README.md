@@ -5,7 +5,26 @@ vim-center
 
 Vim plugin to make **centered headings**:
 
-[![asciicast](https://asciinema.org/a/281912.svg)](https://asciinema.org/a/281912?t=2)
+[![Demo of using vim-center](https://raw.githubusercontent.com/eddieantonio/i/master/vim-center.gif)](https://asciinema.org/a/281912?t=2)
+
+
+Install
+-------
+
+Use your favourite package manager:
+
+### Pathogen <https://github.com/tpope/vim-pathogen>
+
+    git clone https://github.com/eddieantonio/vim-center ~/.vim/bundle/vim-center
+
+### vim-plug <https://github.com/gmarik/vundle>
+
+    Plug 'eddieantonio/vim-center'
+
+### Vundle <https://github.com/gmarik/vundle>
+
+    Plugin 'eddieantonio/vim-center'
+
 
 Commands
 --------
@@ -14,7 +33,7 @@ There is only one command: `:CenterHeading`
 
 Write a heading in your buffer like this:
 
-```python
+```
 This is my heading
 ```
 
@@ -25,7 +44,7 @@ Then, in normal mode, type `:CenterHeading` and press enter:
 ```
 
 The delimiters are determined automatically by file type. Say I was
-writing C Code and I made a heading for constants:
+writing code in C and I made a heading for constants:
 
 ```c
 Constants
