@@ -12,6 +12,7 @@
 CONTENTS                                                        *CenterContents*
 
  1. Usage .............. |CenterUsage|
+ 1.1. :CenterHeading ... |:CenterHeading|
  2. Bugs ............... |CenterBugs|
  3. Changelog .......... |CenterChangelog|
  4. Credits ............ |CenterCredits|
@@ -22,15 +23,15 @@ Section 1: Usage                                                   *CenterUsage*
 
 The main usage is from command mode.
 
-Type the text of the comment you want to make a, then use the |CenterHeading|
-command: >
+Type the text of the comment you want to make centered, then use the
+|CenterHeading| command: >
     :CenterHeading
 <
 
 That's it!
 
 --------------------------------------------------------------------------------
-CenterHeading                                                    *CenterHeading*
+:CenterHeading                          *<Plug>(center-heading)*  *:CenterHeading*
 
 Centers the current line, surrounding each side with appropriate delimiters.
 The delimiters are automatically determined from the current 'commentstring'
@@ -38,6 +39,10 @@ option. The width of the comment is determined either from the current
 'textwidth' option, or, if 'textwidth' is 0, it is inferred from the size of the
 current window.
 
+|:CenterHeading| is available as to mappings as |<Plug>(center-heading)|. I
+recommend you place a line like the following in your |.vimrc|: >
+    noremap <Leader>ch <Plug>(center-heading)
+<
 
 ================================================================================
 Section 2: Bugs                                                     *CenterBugs*
@@ -47,6 +52,10 @@ Currently, this overrides the default yank register.
 ================================================================================
 Section 3: Changelog                                           *CenterChangelog*
 
+0.2.0
+ - Determines comment delimiters from 'commentstring'
+ - Add |<Plug>(center-heading)| as a mapping target.
+ - I still have no idea what I'm doing
 0.1.0
  - initial release
  - Eddie's first plugin -- I have no idea what I'm doing
