@@ -32,8 +32,11 @@ That's it!
 --------------------------------------------------------------------------------
 CenterHeading                                                    *CenterHeading*
 
-Centers the currently line, surronding each side with single-line comment
-delimeters.
+Centers the current line, surrounding each side with appropriate delimiters.
+The delimiters are automatically determined from the current 'commentstring'
+option. The width of the comment is determined either from the current
+'textwidth' option, or, if 'textwidth' is 0, it is inferred from the size of the
+current window.
 
 
 ================================================================================

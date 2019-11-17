@@ -24,25 +24,35 @@ function! s:CenterComment()
   endif
 
   " &commentstring SHOULD be something like:
-  " #%s -- for shell, Python, Ruby, etc.
+  " # %s -- for shell, Python, Ruby, etc.
+  " "%s -- for Vimscript
   " /*%s*/ -- for C, JavaScript, etc.
   " Splitting it at '%s' returns one or two parts
   let l:commentchars = split(&commentstring, '%s')
-  let l:begin = l:commentchars[0]
+  let l:begin = trim(l:commentchars[0])
 
   " l:begin should be something like '/*'  or '#'
   " l:cont should be something like '*' or '#'
   " l:end should be something like '*/' or '#'
   if len(l:commentchars) ==# 1
-    let l:cont = l:begin
+    if len(l:commentchars[0]) ># 1
+      let l:cont = l:commentchars[0][1]
+    else
+      let l:cont = l:begin
+    endif
     let l:end = l:begin
   elseif len(l:commentchars) ==# 2
     let l:cont = l:begin[1]
-    let l:end = l:commentchars[1]
+    let l:end = trim(l:commentchars[1])
   else
     echoerr "Don't know how to handle commentstring: " . &commentstring
     return
   endif
+
+  if len(l:cont) ># 1
+    echoerr "Don't know how to deal with continuation: " . l:cont
+    return
+  end
 
   let l:current_line = line(".")
   let l:heading_text = trim(getline("."))
