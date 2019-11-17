@@ -1,0 +1,11 @@
+Before:
+  set textwidth=30
+
+Given Python (Some text):
+  Centered Text
+
+Execute:
+  CenterHeading
+
+Expect:
+  ####### Centered Text ########
