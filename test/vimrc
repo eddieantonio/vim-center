@@ -1,6 +1,12 @@
 " Based on https://github.com/junegunn/vader.vim#travis-ci-integration
 filetype off
-set rtp+=vader.vim
+if !empty(glob("vader.vim"))
+  set rtp+=vader.vim
+elseif !empty(glob("~/.vim/plugged/vader.vim"))
+  set rtp+=$HOME/.vim/plugged/vader.vim
+else
+  throw 'Vader not found in path'
+endif
 set rtp+=.
 set rtp+=after
 filetype plugin indent on

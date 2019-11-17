@@ -1,0 +1,2 @@
+#!/bin/sh
+vim -Nu test/vimrc -c 'Vader! test/*.vader' >/dev/null

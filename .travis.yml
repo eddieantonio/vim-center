@@ -1,6 +1,6 @@
 language: minimal
 
-before_script:
+before_install:
  - git clone https://github.com/junegunn/vader.vim.git
 
 script:
