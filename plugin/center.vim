@@ -45,7 +45,7 @@ function! s:CenterComment()
   endif
 
   let l:current_line = line(".")
-  let l:heading_text = getline(".")
+  let l:heading_text = trim(getline("."))
 
   " Figure out how much padding we need.
   let l:space_available = l:width
@@ -61,6 +61,7 @@ function! s:CenterComment()
   endif
 
   let l:left_space = l:space_available / 2
+  "
   " Uneven space left? have an extra padding on the right.
   if l:space_available / 2.0 ># l:left_space
     let l:right_space = l:left_space + 1
