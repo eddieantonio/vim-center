@@ -13,7 +13,7 @@ endif
 
 let loaded_c_center = 1
 
-function! s:CenterComment()
+function! s:CenterHeading()
   let l:current_line = line('.')
   let l:heading_text = trim(getline('.'))
 
@@ -109,5 +109,8 @@ function! s:DetermineCommentDelimiters(commentstring)
   return [l:begin, l:cont, l:end]
 endfunction
 
+command! CenterHeading call s:CenterHeading()
 
-command! CenterHeading call s:CenterComment()
+" Define useful mappings
+noremap <unique> <script> <Plug>(center-heading) <SID>Heading
+noremap <SID>Heading :call <SID>CenterHeading()<CR>
