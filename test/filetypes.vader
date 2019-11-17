@@ -1,6 +1,9 @@
 ################################### Setup ####################################
 Before:
   set textwidth=30
+After:
+~ Reset the comment string to the C default:
+  let &commentstring = '/*%s*/'
 
 
 ################################# Test Cases #################################
@@ -8,48 +11,51 @@ Before:
 Given Python (a heading in Python):
   Centered Text
 
-Execute:
+Execute (:CenterHeading):
+  let &commentstring = '# %s'
   CenterHeading
 
-Expect Python:
+Expect Python (Centered, with proper Python delimiters):
   ####### Centered Text ########
 
 
 Given JavaScript (a heading in JavaScript):
   Centered Text
 
-Execute:
+Execute (:CenterHeading):
+  let &commentstring = '//%s'
   CenterHeading
 
-Expect JavaScript:
+Expect JavaScript (Centered, with proper JavaScript delimiters):
   /////// Centered Text ////////
 
 
 Given C (a heading in C):
   Centered Text
 
-Execute:
+Execute (:CenterHeading):
   CenterHeading
 
-Expect C:
+Expect C (Centered, with proper C delimiters):
   /****** Centered Text *******/
 
 
 Given CSS (a heading in CSS):
   Centered Text
 
-Execute:
+Execute (:CenterHeading):
   CenterHeading
 
-Expect CSS:
+Expect CSS (Centered, with proper CSS delimiters):
   /****** Centered Text *******/
 
 
 Given Erlang (a heading in Erlang):
   Centered Text
 
-Execute:
+Execute (:CenterHeading):
+  let &commentstring = '%%s'
   CenterHeading
 
-Expect Erlang:
+Expect Erlang (Centered, with proper Erlang delimiters):
   %%%%%%% Centered Text %%%%%%%%
