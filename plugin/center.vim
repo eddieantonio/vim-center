@@ -7,7 +7,7 @@
 " ============================================================================
 
 " Script intialization section
-if exists('loaded_c_center') || (v:version < 801)
+if exists('loaded_c_center')
   finish
 endif
 
@@ -113,6 +113,7 @@ function! s:DetermineCommentDelimiters(commentstring)
 
   return [l:begin, l:cont, l:end]
 endfunction
+
 
 " Vim ~8.1 introduced trim(), but I'm testing on Vim 7.4,
 " so implement it manually:
