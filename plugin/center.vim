@@ -19,16 +19,14 @@ function! s:CenterComment()
 
   let l:comment_parts = s:DetermineCommentDelimiters(&commentstring)
   if len(l:comment_parts) != 3
-    echoerr 'Cannot determine comment delimiters'
-    return
+    throw 'Cannot determine comment delimiters'
   end
   let l:begin = l:comment_parts[0]
   let l:cont = l:comment_parts[1]
   let l:end = l:comment_parts[2]
 
   if len(l:cont) ># 1
-    echoerr "Don't know how to deal with continuation: " . l:cont
-    return
+    throw "Don't know how to deal with continuation: " . l:cont
   end
 
   " How wide should it be?
@@ -47,8 +45,7 @@ function! s:CenterComment()
   let l:space_available = l:space_available - len(l:end)
 
   if l:space_available <=# 0
-    echoerr 'Not enough space!'
-    return
+    throw 'Not enough space to center'
   endif
 
   let l:left_space = l:space_available / 2
@@ -106,8 +103,7 @@ function! s:DetermineCommentDelimiters(commentstring)
     let l:cont = l:begin[1]
     let l:end = trim(l:commentchars[1])
   else
-    echoerr "Don't know how to handle commentstring: " . &commentstring
-    return
+    throw "Don't know how to handle commentstring: " . &commentstring
   endif
 
   return [l:begin, l:cont, l:end]
