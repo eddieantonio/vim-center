@@ -86,7 +86,7 @@ endfunction
 " /*%s*/ -- for C, JavaScript, etc.
 " Splitting it at '%s' returns one or two parts
 function! s:DetermineCommentDelimiters(commentstring)
-  let l:commentchars = split(&commentstring, '%s')
+  let l:commentchars = split(a:commentstring, '%s')
   let l:begin = trim(l:commentchars[0])
 
   " l:begin should be something like '/*'  or '#'
@@ -95,9 +95,15 @@ function! s:DetermineCommentDelimiters(commentstring)
   if len(l:commentchars) ==# 1
     if len(l:commentchars[0]) ># 1
       let l:cont = l:commentchars[0][1]
+      " cont could be whitepsace, and that's NO GOOD!
+      " Just make it the start delimiter again in that case.
+      if len(trim(l:cont)) ==# 0
+        let l:cont = l:begin
+      end
     else
       let l:cont = l:begin
     endif
+
     let l:end = l:begin
   elseif len(l:commentchars) ==# 2
     let l:cont = l:begin[1]
