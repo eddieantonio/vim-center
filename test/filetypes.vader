@@ -1,0 +1,55 @@
+################################### Setup ####################################
+Before:
+  set textwidth=30
+
+
+################################# Test Cases #################################
+
+Given Python (a heading in Python):
+  Centered Text
+
+Execute:
+  CenterHeading
+
+Expect Python:
+  ####### Centered Text ########
+
+
+Given JavaScript (a heading in JavaScript):
+  Centered Text
+
+Execute:
+  CenterHeading
+
+Expect JavaScript:
+  /////// Centered Text ////////
+
+
+Given C (a heading in C):
+  Centered Text
+
+Execute:
+  CenterHeading
+
+Expect C:
+  /****** Centered Text *******/
+
+
+Given CSS (a heading in CSS):
+  Centered Text
+
+Execute:
+  CenterHeading
+
+Expect CSS:
+  /****** Centered Text *******/
+
+
+Given Erlang (a heading in Erlang):
+  Centered Text
+
+Execute:
+  CenterHeading
+
+Expect Erlang:
+  %%%%%%% Centered Text %%%%%%%%
