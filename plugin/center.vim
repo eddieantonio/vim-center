@@ -2,20 +2,23 @@
 " File:        center.vim
 " Description: vim plugin that creates a centered heading comment
 " Author:      Eddie Antonio Santos
-" Version:     0.1.0
+" Version:     0.2.0
 "
 " ============================================================================
 
 " Script intialization section
-if exists('loaded_c_center')
+if exists('loaded_c_center') || (v:version < 801)
   finish
 endif
 
-let loaded_c_center = 1
+let g:loaded_c_center = 1
+
+
+" ================================ Core API ==================================
 
 function! s:CenterHeading()
   let l:current_line = line('.')
-  let l:heading_text = trim(getline('.'))
+  let l:heading_text = s:Trim(getline('.'))
 
   let l:comment_parts = s:DetermineCommentDelimiters(&commentstring)
   if len(l:comment_parts) != 3
@@ -74,6 +77,8 @@ function! s:CenterHeading()
 endfunction
 
 
+" =========================== Internal functions ============================
+
 " &commentstring SHOULD be something like:
 " # %s -- for shell, Python, Ruby, etc.
 " "%s -- for Vimscript
@@ -81,7 +86,7 @@ endfunction
 " Splitting it at '%s' returns one or two parts
 function! s:DetermineCommentDelimiters(commentstring)
   let l:commentchars = split(a:commentstring, '%s')
-  let l:begin = trim(l:commentchars[0])
+  let l:begin = s:Trim(l:commentchars[0])
 
   " l:begin should be something like '/*'  or '#'
   " l:cont should be something like '*' or '#'
@@ -91,7 +96,7 @@ function! s:DetermineCommentDelimiters(commentstring)
       let l:cont = l:commentchars[0][1]
       " cont could be whitepsace, and that's NO GOOD!
       " Just make it the start delimiter again in that case.
-      if len(trim(l:cont)) ==# 0
+      if len(s:Trim(l:cont)) ==# 0
         let l:cont = l:begin
       end
     else
@@ -101,7 +106,7 @@ function! s:DetermineCommentDelimiters(commentstring)
     let l:end = l:begin
   elseif len(l:commentchars) ==# 2
     let l:cont = l:begin[1]
-    let l:end = trim(l:commentchars[1])
+    let l:end = s:Trim(l:commentchars[1])
   else
     throw "Don't know how to handle commentstring: " . &commentstring
   endif
@@ -109,8 +114,21 @@ function! s:DetermineCommentDelimiters(commentstring)
   return [l:begin, l:cont, l:end]
 endfunction
 
+" Vim ~8.1 introduced trim(), but I'm testing on Vim 7.4,
+" so implement it manually:
+function s:Trim(text)
+  let l:text = substitute(a:text, '\m\C^\s\+' ,'', '')
+  let l:text = substitute(l:text, '\m\C\s\+$' ,'', '')
+  return l:text
+endfunction
+
+
+" ========================== Command definitions ============================
+
 command! CenterHeading call s:CenterHeading()
 
-" Define useful mappings
+
+" ================================ Mappings =================================
+
 noremap <unique> <script> <Plug>(center-heading) <SID>Heading
 noremap <SID>Heading :call <SID>CenterHeading()<CR>
