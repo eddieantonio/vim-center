@@ -11,51 +11,34 @@ if exists("loaded_c_center")
   finish
 endif
 
-let loaded_c_center = 1
+"""""""""""""""""""""""""" let loaded_c_center = 1 """""""""""""""""""""""""""
 
 " P.S., for n00bs like me: https://devhints.io/vimscript
 
 function! s:CenterComment()
-  " How wide should it be?
-  if &l:textwidth ># 0
-    let l:width = &l:textwidth
-  else
-    let l:width = winwidth(0)
-  endif
+  let l:current_line = line(".")
+  let l:heading_text = trim(getline("."))
 
-  " &commentstring SHOULD be something like:
-  " # %s -- for shell, Python, Ruby, etc.
-  " "%s -- for Vimscript
-  " /*%s*/ -- for C, JavaScript, etc.
-  " Splitting it at '%s' returns one or two parts
-  let l:commentchars = split(&commentstring, '%s')
-  let l:begin = trim(l:commentchars[0])
-
-  " l:begin should be something like '/*'  or '#'
-  " l:cont should be something like '*' or '#'
-  " l:end should be something like '*/' or '#'
-  if len(l:commentchars) ==# 1
-    if len(l:commentchars[0]) ># 1
-      let l:cont = l:commentchars[0][1]
-    else
-      let l:cont = l:begin
-    endif
-    let l:end = l:begin
-  elseif len(l:commentchars) ==# 2
-    let l:cont = l:begin[1]
-    let l:end = trim(l:commentchars[1])
-  else
-    echoerr "Don't know how to handle commentstring: " . &commentstring
+  let l:comment_parts = s:DetermineCommentDelimiters(&commentstring)
+  if len(l:comment_parts) != 3
+    echoerr "Cannot determine comment delimiters"
     return
-  endif
+  end
+  let l:begin = l:comment_parts[0]
+  let l:cont = l:comment_parts[1]
+  let l:end = l:comment_parts[2]
 
   if len(l:cont) ># 1
     echoerr "Don't know how to deal with continuation: " . l:cont
     return
   end
 
-  let l:current_line = line(".")
-  let l:heading_text = trim(getline("."))
+  " How wide should it be?
+  if &l:textwidth ># 0
+    let l:width = &l:textwidth
+  else
+    let l:width = winwidth(0)
+  endif
 
   " Figure out how much padding we need.
   let l:space_available = l:width
@@ -95,5 +78,37 @@ function! s:CenterComment()
 
   call setline(l:current_line, l:comment)
 endfunction
+
+
+" &commentstring SHOULD be something like:
+" # %s -- for shell, Python, Ruby, etc.
+" "%s -- for Vimscript
+" /*%s*/ -- for C, JavaScript, etc.
+" Splitting it at '%s' returns one or two parts
+function! s:DetermineCommentDelimiters(commentstring)
+  let l:commentchars = split(&commentstring, '%s')
+  let l:begin = trim(l:commentchars[0])
+
+  " l:begin should be something like '/*'  or '#'
+  " l:cont should be something like '*' or '#'
+  " l:end should be something like '*/' or '#'
+  if len(l:commentchars) ==# 1
+    if len(l:commentchars[0]) ># 1
+      let l:cont = l:commentchars[0][1]
+    else
+      let l:cont = l:begin
+    endif
+    let l:end = l:begin
+  elseif len(l:commentchars) ==# 2
+    let l:cont = l:begin[1]
+    let l:end = trim(l:commentchars[1])
+  else
+    echoerr "Don't know how to handle commentstring: " . &commentstring
+    return
+  endif
+
+  return [l:begin, l:cont, l:end]
+endfunction
+
 
 command! CenterHeading call s:CenterComment()
